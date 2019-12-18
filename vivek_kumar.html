@@ -1,0 +1,233 @@
+<html>
+    <head>
+        <style type="text/css">
+
+        body{
+            text-align: center;
+        }
+
+        #left{
+            float: left;
+            margin-left: 100px;
+        }
+
+        #right{
+            float: right;
+            margin-right: 150px;
+        }
+
+        input{
+            border: 2px solid black;
+            font-size: 7mm;
+        }
+
+        #total, #score{
+            width: 160px;
+            height: 65px;
+            background: gray;
+            text-align: center;
+        }
+
+        #min, #max{
+            width: 75px;
+            height: 50px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #min{
+            background: red;
+        }
+
+        #max{
+            background: green;
+        }
+
+        #button123, #button456, #button789, #minmaxbox{
+            display: flex;
+            flex-direction: row;
+        }
+
+        button{
+            height: 50px;
+            width: 50px;
+            margin: 10px;
+            border: 1px solid black;
+            background: rgb(238, 80, 7);
+        }
+
+        .zero{
+            background:purple;
+        }
+
+        .one, .three, .seven, .nine{
+            background: rgb(51, 199, 51);
+        }
+
+        #enter, #rmall, #rmeven, #rmodd, #rmlast{
+            width: 190px;
+            background: black;
+            color: white;
+            font-size: 5mm;
+        }
+
+        #rightbtn{
+            display: flex;
+            flex-direction: column;
+        }
+
+        b{
+            font-size: 5mm;
+            margin-left: 20px;
+            text-align: center;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div id="left">
+          <div>
+              <b>TOTAL<br>
+                <input type="text" value="-" id="total">
+              </b>
+          </div>
+          <div id="minmaxbox">
+              <b><input type="text" value="50" id="min"><br>MIN</b>
+              <b><input type="text" value="80" id="max"><br>MAX</b>
+          </div>
+          <b>SCORE<br>
+              <input type="text" value="#" id="score">
+          </b>
+          <div id="button123">
+              <button value="1" onclick="number('1')" class="one">1</button>
+              <button value="2" onclick="number('2')">2</button>
+              <button value="3" onclick="number('3')" class="three">3</button>
+          </div>
+          <div id="button456">
+              <button value="4" onclick="number('4')">4</button>
+              <button value="5" onclick="number('5')">5</button>
+              <button value="6" onclick="number('6')">6</button>
+          </div>
+          <div id="button789">
+              <button value="7" onclick="number('7')" class="seven">7</button>
+              <button value="8" onclick="number('8')">8</button>
+              <button value="9" onclick="number('9')" class="nine">9</button>
+          </div>
+          <div id="button0">
+              <button value="0" onclick="number('0')" class="zero">0</button>
+          </div>
+          <div>
+              <button onclick="enterButton()" id="enter">ENTER</button>
+          </div>
+        </div>
+        <div id="right">
+            <h1>GAME SCORES</h1>
+            <p id="display"></p>
+            <div id="rightbtn">
+                <button onclick="removeAll()" id="rmall">REMOVE ALL</button>
+                <button onclick="removeOdd()" id="rmodd">REMOVE ODD</button>
+                <button onclick="removeEven()" id="rmeven">REMOVE EVEN</button>
+                <button onclick="removeLast()" id="rmlast">REMOVE LAST</button>
+            </div>
+        </div>
+        <script>
+            var result = "";
+            var sum = "";
+            var min = 50;
+            var max = 80;
+            var inpmin = document.getElementById("min");
+            var inpmax = document.getElementById("max");
+            var inpscore = document.getElementById("score");
+            var inptotal = document.getElementById("total");
+            function number(digits) {
+                result += digits;
+                inpscore.value = result;
+            }
+
+            
+            var add = (function () {
+              var count = 0;
+              return function () {return count += 1;}
+            })();
+            function enterButton() {
+                for (var i = 0; i < result.length; i++){
+                    if (result <= min) {
+                        inpmin.value = result;
+                        result = "";
+                    }
+                    else if (result >= max){
+                        inpmax.value = result;
+                        result = "";
+                    }
+                    else {
+                        result = "";
+                    }
+                }
+
+                inptotal.value = Number(inpmin.value) + Number(inpmax.value);
+                var create = document.createElement("p");
+                var text = document.createTextNode("Game " + add(i) + " - " + inptotal.value);
+                create.appendChild(text);
+                document.getElementById("display").appendChild(create);
+                inpscore.value = "";
+            }
+
+
+            function removeAll() {
+                inptotal.value = "-";
+                inpmin.value = "50";
+                inpmax.value = "80";
+                inpscore.value = "#";
+                document.getElementById("display").innerHTML = "";
+            }
+            var abc = document.querySelectorAll
+
+
+            function removeOdd() {
+                var oddval = document.querySelectorAll("#display p");
+                var odd = document.getElementById("display");
+                console.log(oddval)
+                for (var i = 0; i < oddval.length; i++){
+                    if (i % 2 == 0){
+                        odd.removeChild(oddval[i])
+                    }
+                }
+                inptotal.value = "-";
+                inpmin.value = "50";
+                inpmax.value = "80";
+                inpscore.value = "#"
+            }
+
+
+            function removeEven() {
+                var evenval = document.querySelectorAll("#display p");
+                var even = document.getElementById("display");
+                console.log(evenval)
+                for (var i = 0; i < evenval.length; i++){
+                    if (i % 2 == 1){
+                        even.removeChild(evenval[i])
+                    }
+                }
+                inptotal.value = "-";
+                inpmin.value = "50";
+                inpmax.value = "80";
+                inpscore.value = "#"
+            }
+
+
+            function removeLast() {
+                var lastval = document.querySelectorAll("#display p");
+                var last = document.getElementById("display");
+                console.log(lastval)
+                // for (var i = 0; i < lastval.length; i++){
+                    last.removeChild(lastval[lastval.length - 1])
+                // }
+                inptotal.value = "-";
+                inpmin.value = "50";
+                inpmax.value = "80";
+                inpscore.value = "#"
+                // document.getElementById("display").innerHTML = last;
+            }
+        </script>
+    </body>
+</html>
